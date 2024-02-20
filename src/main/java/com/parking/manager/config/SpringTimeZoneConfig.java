@@ -1,0 +1,16 @@
+package com.parking.manager.config;
+
+import jakarta.annotation.PostConstruct;
+import org.springframework.context.annotation.Configuration;
+
+import java.util.TimeZone;
+
+@Configuration
+public class SpringTimeZoneConfig {
+
+    @PostConstruct
+    public void timeZoneConfig() {
+        // Set the default time zone to UTC
+        TimeZone.setDefault(TimeZone.getTimeZone("America/Sao_Paulo"));
+    }
+}
