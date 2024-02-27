@@ -3,6 +3,7 @@ package com.parking.manager.web.controller;
 import com.parking.manager.entity.Usuario;
 import com.parking.manager.service.UsuarioService;
 import com.parking.manager.web.dto.UsuarioCreateDto;
+import com.parking.manager.web.dto.UsuarioSenhaDto;
 import com.parking.manager.web.dto.mapper.UsuarioMapper;
 import com.parking.manager.web.dto.mapper.UsuarioResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -32,9 +33,9 @@ public class UsuarioController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Usuario> updatePassword(@PathVariable Long id, @RequestBody Usuario usuario) {
-        Usuario user = usuarioService.editarSenha(id, usuario.getPassword());
-        return ResponseEntity.ok(user);
+    public ResponseEntity<Void> updatePassword(@PathVariable Long id, @RequestBody UsuarioSenhaDto dto) {
+        Usuario user = usuarioService.editarSenha(id, dto.getSenhaAtual(), dto.getNovaSenha(), dto.getConfirmaSenha());
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping
