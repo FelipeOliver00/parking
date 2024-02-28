@@ -5,6 +5,9 @@ import com.parking.manager.web.dto.UsuarioCreateDto;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class UsuarioMapper {
 
     public static Usuario toUsuario(UsuarioCreateDto createDto) {
@@ -23,6 +26,10 @@ public class UsuarioMapper {
         mapper.addMappings(propps);
 
         return mapper.map(usuario, UsuarioResponseDto.class);
+    }
+
+    public static List<UsuarioResponseDto> toListDto(List<Usuario> usuarios) {
+        return usuarios.stream().map(user -> toDto(user)).collect(Collectors.toList());
     }
 
 }
