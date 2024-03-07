@@ -1,8 +1,10 @@
 package com.parking.manager.service;
 
 import com.parking.manager.entity.Usuario;
+import com.parking.manager.exception.UserNameUniqueViolationException;
 import com.parking.manager.repository.UsuarioRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +18,11 @@ public class UsuarioService {
 
     @Transactional
     public Usuario savlar(Usuario usuario) {
-        return usuarioRepository.save(usuario);
+        try {
+            return usuarioRepository.save(usuario);
+        }catch (DataIntegrityViolationException e) {
+            throw new UserNameUniqueViolationException(String.format("Nome de usuário: {%s} já cadastrado", usuario.getUsername()));
+        }
     }
 
     @Transactional(readOnly = true)
